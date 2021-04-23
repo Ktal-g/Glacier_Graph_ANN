@@ -26,11 +26,6 @@ pio.renderers.default = 'browser'
 
 import networkx as nx
 
-#%%
-import sys
-# insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, 'D:/Jack/glacier_proj_home/Codeing_files/functions')
-
 from FnExtract_raster_data import (GetRasterEdgeData, 
                                    point_and_vector_to_AB,
                                    plot_cross_vel,
@@ -39,7 +34,6 @@ from FnExtract_raster_data import (GetRasterEdgeData,
                                    map_rgi_to_tiff_data,
                                    length_to_degrees)
 
-from extract_glacier_dirs import (find_file_ends_with)
 
 #%%
 def Calculate_flowline_crossections(segment_input_GDF_path,
@@ -401,51 +395,3 @@ def Calculate_flowline_crossections(segment_input_GDF_path,
         
         segments_df.to_file(output_point_data_dir + '/' + segment_points_out_file)
         print("\n\n\t\tOputputted point shape file to: ", output_point_data_dir + '/' + segment_points_out_file)
-
-
-#%%
-
-if __name__ == "__main__":
-    
-    path_oggm_polygons = "files_glacier_shape/input_data"
-    path_oggm_points = "files_glacier_shape/point_data"
-    
-    
-    glacier_point_shps_list = find_file_ends_with(path_oggm_points,'.shp')
-    glacier_polygon_shps_list = find_file_ends_with(path_oggm_polygons,'.shp')
-    
-    glacier_file_num = 0
-    print("------------------------------------------------------\n\n")
-    print("running glacier file number {}: {}".format(glacier_file_num ,glacier_polygon_shps_list[glacier_file_num]))
-    path_to_polygons = path_oggm_polygons + "/" + glacier_polygon_shps_list[glacier_file_num]
-    path_to_points = path_oggm_points + "/" + glacier_point_shps_list[glacier_file_num]
-    
-    Calculate_flowline_crossections(path_to_catchment_polygons = path_to_polygons,
-                                            segment_input_GDF_path = path_to_points,
-                                            tif_file_end = '_thickness.tif',
-                                            step = 1, 
-                                            testing= False,
-                                            plot_thicknesses = False,
-                                            plot_velocities = False,
-                                            output_adition = "",
-                                            run_on_single_glacier=True,
-                                            RGI_id_single=('RGI60-01.01731','RGI60-01.00031'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
