@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 
-
+#import moduals
 import numpy as np
 import geopandas as gpd
-import pandas as pd
 import keras.backend as K 
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.io as pio
-#pio.renderers.default = 'svg'
+
 pio.renderers.default = 'browser'
 import networkx as nx
-import numpy as np
-import sys
+
 import tensorflow as tf 
-# insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, 'D:/Jack/glacier_proj_home/Codeing_files/functions')
 
 tf.compat.v1.enable_eager_execution()
 
@@ -1137,188 +1133,3 @@ class glacier_network(glacier_repository):
             
         fig.tight_layout()
         plt.show()
-"""
-#%%
-glacier_list = ['RGI60-01.21014', 
-                'RGI60-01.12077', 
-                'RGI60-01.10689', 
-                'RGI60-01.10575', 
-                'RGI60-01.12275', 
-                'RGI60-01.17566', 
-                'RGI60-01.17183', 'RGI60-01.16201', 'RGI60-01.16198', 'RGI60-01.17348', 'RGI60-01.23649', 'RGI60-01.26738', 'RGI60-01.27108', 'RGI60-02.03586', 'RGI60-02.05157', 'RGI60-03.02849', 'RGI60-03.02836', 'RGI60-04.03171', 'RGI60-04.03263', 'RGI60-04.05514', 'RGI60-04.06998', 'RGI60-13.37536', 'RGI60-13.37523', 'RGI60-13.30888', 'RGI60-13.26415', 'RGI60-13.54431', 'RGI60-13.43528', 'RGI60-14.00005', 'RGI60-14.02150', 'RGI60-14.01670', 'RGI60-14.00449', 'RGI60-14.03334', 'RGI60-15.06881', 'RGI60-15.06977', 'RGI60-15.06720', 'RGI60-17.15897', 'RGI60-17.15804', 'RGI60-17.14015']
-file_id = ['390to420', 
-           '150to180', 
-           '150to180', '150to180', '150to180', '270to300', '270to300', '270to300', '270to300', '270to300', '420to450', '450to480', '450to480', '480to510', '480to510', '990to1020', '990to1020', '1200to1230', '1200to1230', '1320to1350', '1410to1440', '2220to2250', '2220to2250', '2220to2250', '2220to2250', '2340to2370', '2280to2310', '2370to2400', '2370to2400', '2370to2400', '2370to2400', '2370to2400', '2580to2610', '2580to2610', '2580to2610', '2760to2790', '2760to2790', '2760to2790']
-
-#%%
-
-#'RGI60-13.37536',
-#'2220to2250',
-glacier_list = [
-'RGI60-13.37523',
-'RGI60-13.30888',
-'RGI60-13.26415',
-'RGI60-13.54431',
-'RGI60-13.43528',
-'RGI60-14.00005',
-'RGI60-14.02150',
-'RGI60-14.01670',
-'RGI60-14.00449',
-'RGI60-14.03334',
-'RGI60-15.06881',
-'RGI60-15.06977',
-'RGI60-15.06720']
-
-file_id = [
-'2220to2250',
-'2220to2250',
-'2220to2250',
-'2340to2370',
-'2280to2310',
-'2370to2400',
-'2370to2400',
-'2370to2400',
-'2370to2400',
-'2370to2400',
-'2580to2610',
-'2580to2610',
-'2580to2610']
-
-evaluation_glaciers = [
-    "RGI60-14.07524", #Siachen Glacier
-    'RGI60-01.21014', #Carroll glacier
-    "RGI60-01.20983", #Sea Otter glacier
-    "RGI60-14.00005", #Biafo glacier
-    ]
-evaluation_glacier_file_ids = [
-    "2460to2490",#Siachen Glacier
-    '390to420', #Carroll glacier
-    "360to390", #Sea Otter glacier
-    "2370to2400" #Biafo glacier
-    ]"""
-#%%
-
-"""
-edge featrures:
-catchment=catchment_num,
- width = mean_width,
- hor_len = horizontal_len,
- area = edge_area,
- area_precip = edge_total_precip, 
- area_temp = edge_total_temp, 
- P_diff = preassure_diff_mean
-Node features:
-    ['altitude','width', 'mean velocity', 'dS', 'dY']
- """
-"""
-if __name__ == "__main__":
-    path_oggm_polygons = "files_glacier_shape/input_data"
-    path_oggm_points = "files_glacier_shape/point_data"
-    
-    polygon_file = "glaciers_polygons_TH20_2220to2250.shp"
-    point_file = "segments_points_TH20_2220to2250.shp"
-    print("running on polygons:", polygon_file)
-    path_to_polygons = path_oggm_polygons + "/" + polygon_file
-    path_to_points = path_oggm_points + "/" + point_file
-    
-    #, 'RGI60-01.22193'
-    #networks to train
-    networks = glacier_network(['RGI60-13.37536'], path_to_points, path_to_polygons)
-    
-    #%%Add glaciers based on file_id:
-    training_bool_options = np.array([True, False])
-    working_glaciers = []
-    glaciers_file_ids = []
-    #%%
-    for file_i, glacier_id in enumerate(glacier_list):
-        training = np.random.choice(training_bool_options, 1) 
-        print("file num and glacier: ", file_i, glacier_id)
-        
-        if file_i < 17: 
-            networks.Add_GlacierFromFileId(glacier_id, file_id = file_id[file_i], training = True)
-        
-            if glacier_id not in working_glaciers:
-                working_glaciers.append(glacier_id)
-                glaciers_file_ids.append(file_id[file_i])
-#%%    
-    for file_i, glacier_id in enumerate(evaluation_glaciers):
-        print("file num and glacier: ", file_i, glacier_id)
-        
-        networks.Add_GlacierFromFileId(glacier_id, file_id = evaluation_glacier_file_ids[file_i], training = False)
-        
-    #%%
-    print(working_glaciers)
-    print(glaciers_file_ids)
-    #%%
-    networks.Train_Model(model_name = 'width, mean velocity, dS, dY, area,informed NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m',
-                         training_glaciers =[],# 'RGI60-01.12077','RGI60-01.17183','RGI60-01.10689','RGI60-01.17566'],
-                         node_feature_vairables=['width', 'mean velocity', 'dS', 'dY'],
-                         inflow_features=['mean thickness'],
-                         edge_features=['area'],#,'_precip', 'area_temp', 'P_diff'], 
-                         epochs=400, n_layers = 6, n_nodes = 25,
-                         exclude_filter_lowwer = 0, exclude_filter_upper = 0, drop_frac = 0.1, validation_split = 0.5, optimizer_num = 3,
-                         include_edge_features=True)
-    
-    #%%
-    networks.Test_ModelFeature('mean thickness',
-                               models=['width, mean velocity, dS, dY, area,informed NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m',
-                                       'width, mean velocity, dS, dY, informed NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m',
-                                       'width, mean velocity, dS, dY, blind NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'],
-                               model_custom_names=["area","informed", "blind"],
-                               test_glaciers = ["RGI60-01.20983"], training_glaciers=[], feature_bin_size=20, bar_width = 8, tick_num = 10,
-                               figsize=(14,8))
-#%%
-networks.Plot_Network("RGI60-14.00005", 'mean thickness', plot=True)
-#%%
-#Good models: 
-    #'width, mean velocity, dS, dY, previous thickness NADAM, epochs 500 6lx20n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'
-    #This one works a lot better just training two one glacier. Feeding it Two produces a bad model#'width, mean velocity, dS, dY, previous thickness NADAM, epochs 500 6lx20n, 6 features, v-split 0.7, d-frac 0.1, threshold 0m' and 'width, mean velocity, dS, dY, previous thickness NADAM, epochs 2000 6lx20n, 6 features, v-split 0.7, d-frac 0.1, threshold 0m'
-    #^try adding more, or trainig another glacier after fitting it to one, or adding a thickness threshold
-    #Don't train for too long! may become overtrained e.g. networks.Plot_GlacierThickness(RGI_id = 'RGI60-01.17566', catchment_number = '17', model_names=['width, mean velocity, dS, dY, previous thickness NADAM, epochs 500 6lx20n, 6 features, v-split 0.7, d-frac 0.1, threshold 0m',
-    #                                                                                            'width, mean velocity, dS, dY, previous thickness NADAM, epochs 2000 6lx25n, 6 features, 4 glaciers, v-split 0.7, d-frac 0.1, threshold 0m'])
-    
-#Bad models:
-    #'width, mean velocity, dS, dY, previous thickness, edge area NADAM, epochs 500 6lx20n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'
-    #'mean velocity, dS, dY, previous thickness, edge area NADAM, epochs 500 6lx20n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'#
-#%%
-networks.nxGraphDict.pop('RGI60-01.17348')
-networks.nxGraphDict.pop('RGI60-01.26738')
-
-#networks.Plot_Network('RGI60-01.22193', 'altitude', plot=True)
-#networks.Plot_GlacierThickness(RGI_id = 'RGI60-01.17566', catchment_number = '17', model_names=['width, mean velocity, dS, dY, previous thickness NADAM, epochs 500 6lx20n, 6 features, v-split 0.7, d-frac 0.1, threshold 0m',
-#                                                                                                'width, mean velocity, dS, dY, previous thickness NADAM, epochs 2000 6lx25n, 6 features, 4 glaciers, v-split 0.7, d-frac 0.1, threshold 0m'])
-#%%
-networks.Plot_GlacierThickness(RGI_id = 'RGI60-14.02150', catchment_number = '6', 
-                               model_names=['width, mean velocity, dS, dY, informed NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m',
-                                            'width, mean velocity, dS, dY, blind NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'],
-                               model_custom_names=['informed', 'blind'])
-#%%
-networks.Plot_GlacierThickness(RGI_id = "RGI60-14.00005", catchment_number = '17', 
-                               model_names=['width, mean velocity, dS, dY, informed NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m',
-                                            'width, mean velocity, dS, dY, blind NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'],
-                               model_custom_names=['informed', 'blind'])
-#%%
-networks.Plot_GlacierThickness(RGI_id = 'RGI60-01.21014', catchment_number = '10',
-                               model_names=['width, mean velocity, dS, dY, informed NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m',
-                                            'width, mean velocity, dS, dY, blind NADAM, epochs 400 6lx25n, 6 features, v-split 0.5, d-frac 0.1, threshold 0m'])
-
-
-
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
