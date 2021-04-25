@@ -1,7 +1,7 @@
 # Glacier_Graph_ANN
 Machine model that trains on directional graph data
 
-Note: this is a work in progress and not all resources are given and I haven't had time to make "quality of life" improvements for general use. Please contant me at s1533132@ed.ac.uk if assistance is required.
+Note: this is a work in progress, not all resources are given and I haven't had time to make "quality of life" improvements for general use. Please contant me at s1533132@ed.ac.uk if assistance is required.
 
 ## Contents:
 Feature_inputs.ipynb
