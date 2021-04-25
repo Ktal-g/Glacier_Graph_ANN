@@ -2,7 +2,7 @@
 """
 Created on Mon Mar 29 17:38:14 2021
 
-@author: Wolf
+@author: Jack Blunt
 """
 t0 = 288. # units.kelvin
 p0 = 1013.25 # units.hPa
@@ -45,9 +45,6 @@ def height_to_pressure_std(height, difference=True):
     
     return int(preassure.real)
 
-"""import requests
-rep = requests.get('http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=3580f48b9d768cdb67d603acfaf42940')
-print(rep.json())"""
 
 #using the function for static density https://fluids.readthedocs.io/fluids.atmosphere.html
 """
@@ -248,21 +245,3 @@ plt.title("%s from\n%s for %s" % (nc_fid.variables['air'].var_desc,\
 
 #%%
 print(air[time_idx, lat_idx, lon_idx] - 273.15)"""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
