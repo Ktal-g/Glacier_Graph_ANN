@@ -188,9 +188,9 @@ class glacier_repository(object):
                 edge_length = (horizontal_len_2 + altitude_dif_2)**(0.5)
                 #area = mean segment width x edge length
                 mean_width = (width0+width1)/2
-                edge_area = mean_width*edge_length/1000000 #divide by 1000000, it was dominating the model
+                edge_area = mean_width*edge_length 
                 
-                #mean surface mass balance
+                #mean surface mass balance #!!! comment out precip and temp if not using netCDF data
                 precipitation_0, temp_0 = get_precipitaion_and_temp([x0, y0]) #Resolution is very bad, so cant tell the diff between node 0 and 1
                 preassure_diff_mean = height_to_pressure_std(mean_altitude)
                 edge_total_precip = precipitation_0*edge_area
@@ -205,8 +205,8 @@ class glacier_repository(object):
                 
                 self.nxGraphDict[RGI_id]['graph'].add_edge(graph_index0, graph_index1, catchment=catchment_num, width = mean_width, 
                                                            hor_len = horizontal_len, area = edge_area,
-                                                           area_precip = edge_total_precip, area_temp = edge_total_temp, 
-                                                           P_diff = preassure_diff_mean)
+                                                           area_precip = edge_total_precip, area_temp = edge_total_temp, #!!! comment out if not using netCDF temp and precip
+                                                           P_diff = preassure_diff_mean)                                 #!!! comment out if not using netCDF temp and precip
                 self.nxGraphDict[RGI_id]['graph inverse'].add_edge(graph_index1, graph_index0, catchment=catchment_num)
                 
                 self.Add_NodeFeatures(graph_index0, segments_df_index0, RGI_id)
